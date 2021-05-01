@@ -1,0 +1,51 @@
+<h1>Shopping Cart</h1>
+<div class="row col-md-10" *ngIf="cart">
+    <p>
+        You have {{cartCount}} items in your shopping cart
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Product</th>
+                <th class="text-center" style="width: 230px">Quantity</th>
+                <th class="text-right" style="width: 200px">Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of cart">
+                <td>
+                    <div [style.backgroundImage]="'url('+item.imageUrl+')'" class="thumbnail"></div>
+                </td>
+                <td>{{item.title}}</td>
+                <td class="text-center">
+                    <div class="row no-gutters">
+                        <div class="col-2">
+                            <button (click)="removeFromCart(item.id)" class="btn btn-secondary btn-block">-</button>
+                        </div>
+                        <div class="col text-center">
+                            <diV>{{item.CartItem.quantity}} in cart</diV>
+                        </div>
+                        <div class="col-2">
+                            <button (click)="addToCart(item.id)" class="btn btn-secondary btn-block">+</button>
+                        </div>
+                    </div>
+                </td>
+                <td class="text-right">{{item.CartItem.quantity*item.price|currency:'INR':symbol}}</td>
+                <td>
+                    <button class="btn btn-danger" (click)="clearCart(item.id)">Clear</button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th></th>
+                <th></th>
+                <th class="text-right">Total Price:</th>
+                <th class="text-right">{{totalPrice|currency:'INR':symbol}}</th>
+            </tr>
+        </tfoot>
+    </table>
+    <a routerLink="/check-out" *ngIf="cart.length" class="btn btn-primary">Check Out</a>
+</div>
